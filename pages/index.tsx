@@ -104,8 +104,9 @@ const variants = {
 export default function GlowingButton() {
   const [ activeTab, setActiveTab ] = useState(ActiveTab.Normal)
   const [ bg, setBg ] = useState(0)
-  const [ show, setShow ] = useState(false)
+  const [ _, setShow ] = useState(false)
 
+  // this is only here to re-trigger mask rendering after font load.
   useEffect(() => {
     setTimeout(() => {
       setShow(true)
@@ -123,54 +124,52 @@ export default function GlowingButton() {
       <Stars />
       <Intro />
       
-      <motion.div animate={{ opacity: show ? 1 : .3}}>
-        <Browser m="116px 0 0 0" onActiveTabChange={(activeIndex) => setActiveTab(activeIndex)}>
-          <AnimatePresence exitBeforeEnter={true}>
+      <Browser m="116px 0 0 0" onActiveTabChange={(activeIndex) => setActiveTab(activeIndex)}>
+        <AnimatePresence exitBeforeEnter={true}>
 
-            {activeTab === 1 && 
-              <Content 
-                as={motion.div}
-                key={ActiveTab.Normal}
-                variants={variants}
-                initial="hidden"
-                animate="open"
-                exit="out"
-              >
-                <NormalButton />
-                <NormalButton noStar />
-              </Content>
-            }
+          {activeTab === 1 && 
+            <Content 
+              as={motion.div}
+              key={ActiveTab.Normal}
+              variants={variants}
+              initial="hidden"
+              animate="open"
+              exit="out"
+            >
+              <NormalButton />
+              <NormalButton noStar />
+            </Content>
+          }
 
-            {activeTab === 2 && 
-              <Content 
-                as={motion.div}
-                key={ActiveTab.Loader}
-                variants={variants}
-                initial="hidden"
-                animate="open"
-                exit="out"
-              >
-                <Loader />
-                <Loader noBorder />
-              </Content>
-            }
-            
-            {activeTab === 3 && 
-              <Content 
-                as={motion.div}
-                key={ActiveTab.Special}
-                variants={variants}
-                initial="hidden"
-                animate="open"
-                exit="out"
-              >
-                <Special />
-              </Content>
-            }
+          {activeTab === 2 && 
+            <Content 
+              as={motion.div}
+              key={ActiveTab.Loader}
+              variants={variants}
+              initial="hidden"
+              animate="open"
+              exit="out"
+            >
+              <Loader />
+              <Loader noBorder />
+            </Content>
+          }
+          
+          {activeTab === 3 && 
+            <Content 
+              as={motion.div}
+              key={ActiveTab.Special}
+              variants={variants}
+              initial="hidden"
+              animate="open"
+              exit="out"
+            >
+              <Special />
+            </Content>
+          }
 
-          </AnimatePresence>
-        </Browser>
-      </motion.div>
+        </AnimatePresence>
+      </Browser>
 
       <Credits />
 
