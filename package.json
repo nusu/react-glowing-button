@@ -1,0 +1,24 @@
+{
+  "name": "glowing-button",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@next/font": "13.1.1",
+    "@types/node": "18.11.18",
+    "@types/react": "17.0.2",
+    "@types/react-dom": "17.0.2",
+    "@types/styled-components": "^5.1.26",
+    "framer-motion": "6.5.1",
+    "next": "12.2.5",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "styled-components": "5.3.5",
+    "typescript": "4.9.4",
+    "usehooks-ts": "^2.9.1"
+  }
+}
