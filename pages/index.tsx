@@ -1,9 +1,9 @@
 import styled from "styled-components"
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, motion, useAnimationControls } from "framer-motion"
 import Stars from "@/c/GlowingButton/Stars"
 import Intro from "@/c/GlowingButton/Intro"
 import Browser from "@/c/GlowingButton/Browser"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import NormalButton from "./Normal"
 import Loader from "./Loader"
 import Special from "./Special"
@@ -103,7 +103,14 @@ const variants = {
 
 export default function GlowingButton() {
   const [ activeTab, setActiveTab ] = useState(ActiveTab.Normal)
-  const [ bg, setBg ] = useState(0) 
+  const [ bg, setBg ] = useState(0)
+  const [ show, setShow ] = useState(false)
+
+  useEffect(() => {
+    setTimeout(() => {
+      setShow(true)
+    }, 200)
+  }, [])
 
   setTimeout(() => {
     const newBg = bg < BACKGROUNDS.length -1 ? bg + 1 : 0 
@@ -111,57 +118,59 @@ export default function GlowingButton() {
     setBg(newBg)
   }, 10000)
 
-
   return (
     <Container bg={BACKGROUNDS[bg]}>
       <Stars />
       <Intro />
-      <Browser m="116px 0 0 0" onActiveTabChange={(activeIndex) => setActiveTab(activeIndex)}>
-        <AnimatePresence exitBeforeEnter={true}>
+      
+      <motion.div animate={{ opacity: show ? 1 : .3}}>
+        <Browser m="116px 0 0 0" onActiveTabChange={(activeIndex) => setActiveTab(activeIndex)}>
+          <AnimatePresence exitBeforeEnter={true}>
 
-          {activeTab === 1 && 
-            <Content 
-              as={motion.div}
-              key={ActiveTab.Normal}
-              variants={variants}
-              initial="hidden"
-              animate="open"
-              exit="out"
-            >
-              <NormalButton />
-              <NormalButton noStar />
-            </Content>
-          }
+            {activeTab === 1 && 
+              <Content 
+                as={motion.div}
+                key={ActiveTab.Normal}
+                variants={variants}
+                initial="hidden"
+                animate="open"
+                exit="out"
+              >
+                <NormalButton />
+                <NormalButton noStar />
+              </Content>
+            }
 
-          {activeTab === 2 && 
-            <Content 
-              as={motion.div}
-              key={ActiveTab.Loader}
-              variants={variants}
-              initial="hidden"
-              animate="open"
-              exit="out"
-            >
-              <Loader />
-              <Loader noBorder />
-            </Content>
-          }
-          
-          {activeTab === 3 && 
-            <Content 
-              as={motion.div}
-              key={ActiveTab.Special}
-              variants={variants}
-              initial="hidden"
-              animate="open"
-              exit="out"
-            >
-              <Special />
-            </Content>
-          }
+            {activeTab === 2 && 
+              <Content 
+                as={motion.div}
+                key={ActiveTab.Loader}
+                variants={variants}
+                initial="hidden"
+                animate="open"
+                exit="out"
+              >
+                <Loader />
+                <Loader noBorder />
+              </Content>
+            }
+            
+            {activeTab === 3 && 
+              <Content 
+                as={motion.div}
+                key={ActiveTab.Special}
+                variants={variants}
+                initial="hidden"
+                animate="open"
+                exit="out"
+              >
+                <Special />
+              </Content>
+            }
 
-        </AnimatePresence>
-      </Browser>
+          </AnimatePresence>
+        </Browser>
+      </motion.div>
 
       <Credits />
 
