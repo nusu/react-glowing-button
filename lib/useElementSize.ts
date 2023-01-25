@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { useEventListener, useIsomorphicLayoutEffect } from 'usehooks-ts'
 
@@ -19,6 +19,16 @@ function useElementSize(): [
     width: 0,
     height: 0,
   })
+
+  // trigger re-calculation after initial load
+  useEffect(() => {
+    setTimeout(() => {
+      setSize({
+        width: ref?.offsetWidth || 0,
+        height: ref?.offsetHeight || 0,
+      })
+    }, 500)
+  }, [])
 
   // Prevent too many rendering using useCallback
   const handleSize = useCallback(() => {
