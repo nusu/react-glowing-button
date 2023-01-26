@@ -32,6 +32,8 @@ const Button = styled.button`
   line-height: 24px;
   padding: 8px 16px;
   border: none;
+  stroke: 0;
+  -webkit-appearance: none;
   /* make this black if you want to rotating conic gradient */
   background-color: transparent;
   border-radius: 999px;
